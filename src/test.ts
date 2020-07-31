@@ -105,5 +105,6 @@ console.log('list', g1.list);
 
 
 // 装饰器
+// Test.vue
 
 export default foo;
