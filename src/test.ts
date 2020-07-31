@@ -4,11 +4,10 @@ const bar: string = 'xxx';
 
 // 函数
 function greeting(name: string, age?: number, gender= '男'): string {
-    console.log(`greeting=> `, `${name}, ${age}, ${gender}`);
-    return `Hello, ${name},${age},${gender}`;
+    return `${name},${age},${gender}`;
 }
-greeting('Tom', 18);
-greeting('Tom', 18, '女');
+console.log(greeting('Tom', 18));
+console.log(greeting('Tom', 18, '女'));
 
 
 // class类
@@ -67,5 +66,44 @@ class Human {
 }
 
 
+// 泛型
+// 泛型函数
+function funny<T>(args: T): T {
+    return args;
+}
+function funny2<T>(args: T[]): T[] {
+    return args;
+}
+console.log('funny', funny('aaa'));
+console.log('funny', funny([{id: 1, name: 'aaa'}]));
+console.log('funny2',funny2(['a', 'b', 'c']));
+// 泛型接口
+interface R1<T> {
+    ok: 0|1,
+    data: T[]
+}
+function getData<T>(): R1<T> {
+    const data: any[] = [{id:1, name: 'x'}, {id:2, name: 'y'}];
+    return {ok: 1, data};
+}
+console.log('getData', getData())
+function getData2<T>(): Promise<R1<T>> {
+    const data: any[] = [{id:1, name: 'x'}, {id:2, name: 'y'}];
+    return new Promise(resolve => resolve({ok: 1, data}));
+}
+console.log('getData2', getData2());
+// 泛型类
+class GenericNumber<T> {
+    public list: T[] = [];
+    add(value: T): void {
+        this.list.push(value);
+    }
+}
+const g1 = new GenericNumber<number>();
+g1.add(10);
+console.log('list', g1.list);
+
+
+// 装饰器
 
 export default foo;
