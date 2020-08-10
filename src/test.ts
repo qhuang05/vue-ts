@@ -104,7 +104,40 @@ g1.add(10);
 console.log('list', g1.list);
 
 
+
 // 装饰器
-// Test.vue
+function addAge(arg: number){
+    return function(target){
+        target.prototype.age = arg;
+    }
+}
+function method(){
+    console.log('mmm');
+    return function(target, methodName: string, descriptor: PropertyDescriptor){
+        console.log(target, methodName, descriptor);
+        console.log(target.constructor.gender);
+    }
+}
+@addAge(20)
+class Hello {
+    public name: string;
+    public age: number;
+    static gender: string = '女';
+    constructor() {
+        this.name = 'Jerry';
+    }
+    @method()
+    say(p1: string, p2: string) {
+        return 'say Hello, ' + `${p1}-${p2}, ` + this.name;
+    }
+    sing(p1: string, p2: string){
+        return 'sing, ' + this.name;
+    }
+}
+let h1 = new Hello();
+console.log('h1==>', h1.age); //20
+console.log('h1 say==>', h1.say('t', 's')); //say Hello, t-s, Jerry
+// 装饰器在vue中的应用：Test.vue
+
 
 export default foo;
